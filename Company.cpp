@@ -2,7 +2,7 @@
 #include <iostream>
 #include <iomanip>
 
-Company::Company(const std::string& name, const std::string& ticker, const std::string& category, double stockPrice, int totalShares, /* double marketCap */ )
+Company::Company(const std::string& name, const std::string& ticker, const std::string& category, double stockPrice, int totalShares /* double marketCap */ )
     :name (name), ticker(ticker), category(category), stockPrice(stockPrice), totalShares(totalShares) /*, marketCap(marketCap) */ {}
 
 std::string Company::getName() const{
@@ -37,7 +37,7 @@ void Company::printInfo() const{
     std::cout << std::fixed << std::setprecision(2);
     std::cout << "Firma: " << getName() << "\n"
                 << ticker << "\n"
-                << "Kategora: " << getCategory() << "\n"
+                << "Kategoria: " << getCategory() << "\n"
                 << "Cena akcji: " << getStockPrice() << "\n"
                 << "Liczba akcji: " << getTotalShares() << "\n"
                 << "Kapitalizacja rynkowa: " << getMarketCap() << "\n\n";
