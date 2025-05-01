@@ -2,9 +2,13 @@
 #include "Company.h"
 #include "User.h"
 #include "TransactionManager.h"
+#include <SFML/Graphics.hpp>
 
+/*
 int main(){
     // create a company
+    
+    
     Company test("Test", "TST", "test category", 127.25, 15000);
 
     test.printInfo();
@@ -24,6 +28,26 @@ int main(){
     TransactionManager::sellStock(user, &apple, 20);
 
     user.printPortfolio();
-
     return 0;
 }
+ */
+
+ int main()
+ {
+     sf::RenderWindow window(sf::VideoMode({200, 200}), "SFML works!");
+     sf::CircleShape shape(100.f);
+     shape.setFillColor(sf::Color::Green);
+ 
+     while (window.isOpen())
+     {
+         while (const std::optional event = window.pollEvent())
+         {
+             if (event->is<sf::Event::Closed>())
+                 window.close();
+         }
+ 
+         window.clear();
+         window.draw(shape);
+         window.display();
+     }
+ }
