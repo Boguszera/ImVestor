@@ -1,15 +1,27 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iomanip>
 #include "Company.h"
 #include "User.h"
 #include "TransactionManager.h"
 #include "Portfolio.h"
 #include <SFML/Graphics.hpp>
-#include <vector>
+
+
+std::string formatTo2DecimalString(double value) {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2) << value;
+    return oss.str();
+}
 
 int main(){
     sf::RenderWindow window(sf::VideoMode({800, 600}), "ImVestor");
 
-    User user("Robert", 1000);
+    User user("Filip", 1000);
+
+    Portfolio portfolio;
 
     Company companyA("Apple Inc.", "AAPL", "Technology", 150.0, 6543);
     Company companyB("Tesla Inc.", "TSLA", "Automotive", 700.0, 9935);
@@ -31,12 +43,12 @@ int main(){
                 window.close();
         }
 
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Black);
 
         // draw avaliable companies
         for (size_t i = 0; i < companies.size(); ++i) {
             // create caption
-            sf::String companiesString = companies[i].getName() + ": " + std::to_string(companies[i].getStockPrice()) + " PLN";
+            sf::String companiesString = companies[i].getName() + ": " + formatTo2DecimalString(companies[i].getStockPrice()) + " PLN";
             sf::Text companiesText(font, companiesString, 20);
 
             // Ustawienie pozycji tekstu, aby nie były nałożone
@@ -46,15 +58,20 @@ int main(){
 
         // draw user info
 
-        /*
-        sf::String userString = user.printPortfolio()
+        sf::String userString = "Hi " + user.getName() + "\n" + "Balance: " + formatTo2DecimalString(user.getBalance());
         sf::Text userText(font, userString , 20);
-        userText.setPosition(50, 350);
+        userText.setPosition(sf::Vector2f(550.0f, 40.0f));
         window.draw(userText);
 
+        //draw portfolio
+        sf::String portfolioString = "Your shares: \n" + portfolio.getPortfolio();
+        sf::Text portfolioText(font, portfolioString , 20);
+        portfolioText.setPosition(sf::Vector2f(550.0f, 100.0f));
+        window.draw(portfolioText);
+
         window.display();
-        */
-    }
+        
+}
 
     /*
     

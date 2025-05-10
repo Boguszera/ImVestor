@@ -1,6 +1,7 @@
 #include "Portfolio.h"
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 void Portfolio::addStock(Company* company, int shares) {
     auto it = std::find_if(holdings.begin(), holdings.end(), [&](const StockHolding& holding) {
@@ -33,12 +34,18 @@ void Portfolio::removeStock(Company* company, int shares) {
     }
 }
 
-void Portfolio::print() const {
+std::string Portfolio::getPortfolio() const {
+    std::ostringstream oss;  // Tworzymy obiekt ostringstream, który będzie buforował tekst
+    
     if (holdings.empty()) {
-        std::cout << "Portfolio is empty.\n";
+        oss << "Portfolio is empty.\n";
     } else {
         for (const auto& holding : holdings) {
-            holding.printInfo();
+            oss << holding.getCompany()->getName() << " (" 
+                << holding.getCompany()->getTicker() << "): " 
+                << holding.getShares() << " shares\n";
         }
     }
+    
+    return oss.str();  // Zwracamy zawartość bufora jako string
 }
