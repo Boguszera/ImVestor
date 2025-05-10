@@ -14,6 +14,10 @@ set(SFML_DIR "D:/SFML/SFML-3.0.0/lib/cmake/SFML")
 set(SFML_INCLUDE_DIR "D:/SFML/SFML-3.0.0/include")
 set(SFML_LIB_DIR "D:/SFML/SFML-3.0.0/lib")
 
+# font
+configure_file(${CMAKE_SOURCE_DIR}/src/assets/ARIAL.ttf ${CMAKE_BINARY_DIR}/assets/ARIAL.ttf COPYONLY)
+message(STATUS "Ścieżka do czcionki: ${CMAKE_BINARY_DIR}/assets/ARIAL.ttf")
+
 # Add SFML to the include directories
 include_directories(${SFML_INCLUDE_DIR})
 
