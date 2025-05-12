@@ -15,9 +15,14 @@ bool TransactionManager::buyStock(User& user, Company* company, int shares) {
 }
 
 bool TransactionManager::sellStock(User& user, Company* company, int shares) {
-    double totalRevenue = shares * company->getStockPrice();
-    user.getPortfolio().removeStock(company, shares);
-    user.updateBalance(totalRevenue);
-    std::cout << "Sold " << shares << " shares of " << company->getName() << ".\n";
-    return true;
+    bool success = user.getPortfolio().removeStock(company, shares);
+    if (success) {
+        double totalRevenue = shares * company->getStockPrice();
+        user.updateBalance(totalRevenue);  // Aktualizacja salda użytkownika
+        std::cout << "Sold " << shares << " shares of " << company->getName() << ".\n";
+        return true;  // Sprzedaż udana
+    } else {
+        std::cout << "You don't have enough shares to sell or no shares of this company in your portfolio.\n";
+        return false;  // Sprzedaż nieudana
+    }
 }

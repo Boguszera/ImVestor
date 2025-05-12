@@ -1,29 +1,114 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iomanip>
 #include "Company.h"
 #include "User.h"
 #include "TransactionManager.h"
+#include "Portfolio.h"
+#include "Button.hpp"
+#include <SFML/Graphics.hpp>
+#include <variant>
+
+
+std::string formatTo2DecimalString(double value) {
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2) << value;
+    return oss.str();
+}
 
 int main(){
-    // create a company
-    Company test("Test", "TST", "test category", 127.25, 15000);
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "ImVestor");
 
-    test.printInfo();
+    User user("Filip", 1000);
 
-    Company apple("Apple Inc.", "AAPL", "Technology", 150.0, 6543);
-    Company tesla("Tesla Inc.", "TSLA", "Automotive", 700.0, 9935);
+    Portfolio portfolio;
 
-    User user("Jan Kowalski", 10000.0);
+    Company companyA("Apple Inc.", "AAPL", "Technology", 150.0, 6543);
+    Company companyB("Tesla Inc.", "TSLA", "Automotive", 700.0, 9935);
+    Company companyC("Orlen", "ORL", "Energy", 300, 2222);
 
-    user.printPortfolio();
+    std::vector<Company> companies = { companyA, companyB, companyC };
+    std::vector<Button> buyButtons;
+    std::vector<Button> sellButtons;
 
-    TransactionManager::buyStock(user, &apple, 50);
-    TransactionManager::buyStock(user, &tesla, 10);
+    sf::Font font;
+    if (!font.openFromFile("assets/ARIAL.ttf")) {
+        std::cout << "Nie udało się załadować czcionki!" << std::endl;
+        return -1;
+    }
 
-    user.printPortfolio();
+    // draw buttons
+        for (size_t i = 0; i < companies.size(); ++i) {
+            buyButtons.emplace_back(sf::Vector2f(60, 30), sf::Vector2f(400, 50 + i * 40), "Buy", font);
+            sellButtons.emplace_back(sf::Vector2f(60, 30), sf::Vector2f(470, 50 + i * 40), "Sell", font);
+        }
 
-    TransactionManager::sellStock(user, &apple, 20);
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+            }
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
+                    window.close();
+                }
+            }
+            else if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>()) {
+                if (mouseButtonPressed->button == sf::Mouse::Button::Left) {
+                    std::cout << "Left mouse button pressed at: "
+                              << mouseButtonPressed->position.x << ", "
+                              << mouseButtonPressed->position.y << std::endl;
 
-    user.printPortfolio();
+                    // mouse button click support (e.g. buy, sell)
+                    sf::Vector2i mousePos = mouseButtonPressed->position;
 
-    return 0;
+                    for (size_t i = 0; i < companies.size(); ++i) {
+                        if (buyButtons[i].isClicked(mousePos)) {
+                            TransactionManager::buyStock(user, &companies[i], 1);
+                        }
+                        if (sellButtons[i].isClicked(mousePos)) {
+                            TransactionManager::sellStock(user, &companies[i], 1);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        window.clear(sf::Color::Black);
+
+        // draw avaliable companies
+        for (size_t i = 0; i < companies.size(); ++i) {
+            // create caption
+            sf::String companiesString = companies[i].getName() + ": " + formatTo2DecimalString(companies[i].getStockPrice()) + " PLN";
+            sf::Text companiesText(font, companiesString, 20);
+
+            // set position
+            companiesText.setPosition(sf::Vector2f(50.0f, 50.0f + i * 40.0f));
+            window.draw(companiesText); 
+        }
+
+        for (auto& btn : buyButtons) btn.draw(window);
+        for (auto& btn : sellButtons) btn.draw(window);
+
+        // draw user info
+
+        sf::String userString = "Hi " + user.getName() + "\n" + "Balance: " + formatTo2DecimalString(user.getBalance());
+        sf::Text userText(font, userString , 20);
+        userText.setPosition(sf::Vector2f(550.0f, 40.0f));
+        window.draw(userText);
+
+        //draw portfolio
+        sf::String portfolioString = "Your shares: \n" + user.getPortfolio().getPortfolio();
+        sf::Text portfolioText(font, portfolioString , 20);
+        portfolioText.setPosition(sf::Vector2f(550.0f, 100.0f));
+        window.draw(portfolioText);
+        window.display();
+        
+        
+    }
+        return 0;
 }
+

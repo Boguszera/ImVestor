@@ -11,9 +11,9 @@ private:
     std::vector<StockHolding> holdings;
 
 public:
+    std:: string getPortfolio() const;
     void addStock(Company* company, int shares);
-    void removeStock(Company* company, int shares);
-    void print() const;
+    bool removeStock(Company* company, int shares);
 };
 
 #endif

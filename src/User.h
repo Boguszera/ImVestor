@@ -15,6 +15,7 @@ private:
 public:
     User(const std::string& name, double balance);
 
+    std:: string getName() const;
     double getBalance() const;
     void updateBalance(double amount);
     Portfolio& getPortfolio();

@@ -1,6 +1,7 @@
 #include "Company.h"
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 
 Company::Company(const std::string& name, const std::string& ticker, const std::string& category, double stockPrice, int totalShares /* double marketCap */ )
     :name (name), ticker(ticker), category(category), stockPrice(stockPrice), totalShares(totalShares) /*, marketCap(marketCap) */ {}
