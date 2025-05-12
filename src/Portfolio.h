@@ -13,7 +13,7 @@ private:
 public:
     std:: string getPortfolio() const;
     void addStock(Company* company, int shares);
-    void removeStock(Company* company, int shares);
+    bool removeStock(Company* company, int shares);
 };
 
 #endif

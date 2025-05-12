@@ -15,7 +15,7 @@ void Portfolio::addStock(Company* company, int shares) {
     }
 }
 
-void Portfolio::removeStock(Company* company, int shares) {
+bool Portfolio::removeStock(Company* company, int shares) {
     auto it = std::find_if(holdings.begin(), holdings.end(), [&](const StockHolding& holding) {
         return holding.getCompany()->getTicker() == company->getTicker();
     });
@@ -26,11 +26,12 @@ void Portfolio::removeStock(Company* company, int shares) {
             if (it->getShares() == 0) {
                 holdings.erase(it);
             }
+            return true;  // Operacja udana
         } else {
-            std::cerr << "Not enough shares to sell.\n";
+            return false;  // Zbyt mało akcji do sprzedaży
         }
     } else {
-        std::cerr << "No shares of this company in portfolio.\n";
+        return false;  // Brak akcji w portfelu
     }
 }
 

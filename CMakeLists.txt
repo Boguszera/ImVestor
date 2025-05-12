@@ -20,12 +20,17 @@ message(STATUS "Ścieżka do czcionki: ${CMAKE_BINARY_DIR}/assets/ARIAL.ttf")
 
 # Add SFML to the include directories
 include_directories(${SFML_INCLUDE_DIR})
+include_directories(gui)
+include_directories(${CMAKE_SOURCE_DIR}/src/gui)
 
 # Add the SFML libraries manually
 link_directories(${SFML_LIB_DIR})
 
 # Add all .cpp files
-file(GLOB SOURCES CONFIGURE_DEPENDS "src/*.cpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+    "src/*.cpp"
+    "gui/*.cpp"
+)
 
 # Create executable
 add_executable(ImVestor ${SOURCES})
