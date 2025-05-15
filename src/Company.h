@@ -2,6 +2,7 @@
 #define COMPANY_H
 
 #include <string>
+#include <SFML/System.hpp>
 
 class Company {
 private:
@@ -10,6 +11,13 @@ private:
     std::string category;
     double stockPrice;
     int totalShares;
+
+    //fields for trend simulation
+    double trendBias = 0.0;
+    sf::Clock trendClock;
+    float nextTrendChangeTime = 0.0f;
+
+    double lastPrice;
 
 public:
     // constructor
@@ -23,12 +31,15 @@ public:
     int getTotalShares() const;
     double getMarketCap() const;
 
-    // simulation of changes
-    /*
-    void updatePrice(double percentChange);
-    */
-
     void printInfo() const;
+
+    // trend methods
+    void initTrend();
+    void updatePrice();
+    void updateTrend();
+
+    bool didPriceIncrease() const;
+    bool didPriceDecrease() const;
 };
 
 #endif

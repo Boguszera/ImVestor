@@ -10,7 +10,7 @@
 #include "Button.hpp"
 #include <SFML/Graphics.hpp>
 #include <variant>
-
+#include <random>
 
 std::string formatTo2DecimalString(double value) {
     std::ostringstream oss;
@@ -21,17 +21,25 @@ std::string formatTo2DecimalString(double value) {
 int main(){
     sf::RenderWindow window(sf::VideoMode({800, 600}), "ImVestor");
 
-    User user("Filip", 1000);
+    User user("Filip", 10000);
 
     Portfolio portfolio;
 
-    Company companyA("Apple Inc.", "AAPL", "Technology", 150.0, 6543);
-    Company companyB("Tesla Inc.", "TSLA", "Automotive", 700.0, 9935);
-    Company companyC("Orlen", "ORL", "Energy", 300, 2222);
+    Company companyA("Apple Inc.", "AAPL", "Technology", 150, 8000);
+    Company companyB("Tesla Inc.", "TSLA", "Automotive", 350, 900);
+    Company companyC("Orlen", "ORL", "Energy", 280, 10000);
+    Company companyD("Allegro SA", "ALG", "E-commerce", 70, 15000);
+    Company companyE("PKO BP", "PKO", "Finances", 90, 20000);
+    Company companyF("Ubisoft", "UBI", "Gaming", 120, 12000);
 
-    std::vector<Company> companies = { companyA, companyB, companyC };
+    std::vector<Company> companies = { companyA, companyB, companyC, companyD, companyE, companyF};
+    for (auto& company : companies) {
+        company.initTrend();
+    }
+
     std::vector<Button> buyButtons;
     std::vector<Button> sellButtons;
+    sf::Clock priceUpdateClock;
 
     sf::Font font;
     if (!font.openFromFile("assets/ARIAL.ttf")) {
@@ -76,14 +84,37 @@ int main(){
             }
         }
 
+        if (priceUpdateClock.getElapsedTime().asSeconds() > 2.0f) {
+            for (auto& company : companies) {
+                company.updatePrice();
+                company.updateTrend();
+            }
+        priceUpdateClock.restart();
+        }
 
         window.clear(sf::Color::Black);
 
         // draw avaliable companies
         for (size_t i = 0; i < companies.size(); ++i) {
+            const Company& comp = companies[i];
+
+            // the direction of change
+            std::string arrow = "(=)"; // default without change
+            sf::Color color = sf::Color::White;
+
+               if (comp.didPriceIncrease()) {
+                    arrow = "(+)";
+                    color = sf::Color::Green;
+                } else if (comp.didPriceDecrease()) {
+                    arrow = "(-)";
+                    color = sf::Color::Red;
+                }
+
             // create caption
-            sf::String companiesString = companies[i].getName() + ": " + formatTo2DecimalString(companies[i].getStockPrice()) + " PLN";
+            sf::String companiesString = comp.getName() + " " + formatTo2DecimalString(comp.getStockPrice()) + " PLN" + " " + arrow;
             sf::Text companiesText(font, companiesString, 20);
+            
+            companiesText.setFillColor(color);
 
             // set position
             companiesText.setPosition(sf::Vector2f(50.0f, 50.0f + i * 40.0f));
