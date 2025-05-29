@@ -3,6 +3,7 @@
 
 #include <string>
 #include <SFML/System.hpp>
+#include <vector>
 
 class Company {
 private:
@@ -18,6 +19,7 @@ private:
     float nextTrendChangeTime = 0.0f;
 
     double lastPrice;
+    std::vector<float> priceHistory;
 
 public:
     // constructor
@@ -30,6 +32,7 @@ public:
     double getStockPrice() const;
     int getTotalShares() const;
     double getMarketCap() const;
+    const std::vector<float>& getPriceHistory() const;
 
     void printInfo() const;
 

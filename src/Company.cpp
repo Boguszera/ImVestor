@@ -5,6 +5,7 @@
 #include <random>
 #include <algorithm>
 #include <ctime>
+#include <vector>
 
 Company::Company(const std::string& name, const std::string& ticker, const std::string& category, double stockPrice, int totalShares /* double marketCap */ )
     :name (name), ticker(ticker), category(category), stockPrice(stockPrice), totalShares(totalShares), lastPrice(stockPrice) {}
@@ -58,7 +59,12 @@ void Company::updatePrice() {
 
     lastPrice = stockPrice;
     double change = trendBias + noise(engine);
-    stockPrice = std::max(0.0, stockPrice + change); // minimal price = 0.0
+    stockPrice = std::max(1.0, stockPrice + change); // minimal price = 0.0
+
+    priceHistory.push_back(stockPrice);
+    if (priceHistory.size() > 100) {
+        priceHistory.erase(priceHistory.begin());
+    }
 }
 
 void Company::updateTrend() {
@@ -81,4 +87,8 @@ bool Company::didPriceIncrease() const {
 
 bool Company::didPriceDecrease() const {
     return stockPrice < lastPrice;
+}
+
+const std::vector<float>& Company::getPriceHistory() const {
+    return priceHistory;
 }
