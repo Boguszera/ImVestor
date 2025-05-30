@@ -1,8 +1,4 @@
-===========================================================
-                       ImVestor
-                 Wersja: 1.0.0
-          Opis: Symulator giełdowy
-===========================================================
+# ImVestor
 
 ## Opis projektu
 --------------
@@ -28,6 +24,7 @@ a także śledzić zmiany cen w czasie rzeczywistym za pomocą wizualnego wykres
 -----------------------------------------------------------
 ## Struktura projektu
 ------------------
+```
 ImVestor/
 ├── src/                    # Katalog ze wszystkimi plikami źródłowymi (.h i .cpp)
 │   ├── Company.h           # Klasa reprezentująca firmę na giełdzie, zarządzająca ceną akcji, trendami i historią cen
@@ -51,6 +48,7 @@ ImVestor/
 │
 ├── README.md               # Dokumentacja projektu i instrukcje użytkowania
 ├── .gitignore              # Pliki i foldery ignorowane przez Git
+```
 
 -----------------------------------------------------------
 ## Budowanie projektu
@@ -89,5 +87,3 @@ ImVestor/
 3. Kliknij na nazwę spółki, aby wyświetlić wykres jej cen.
 
 4. Śledź swój portfel i saldo w prawym panelu.
-
-===========================================================
