@@ -7,7 +7,7 @@
 #include "User.h"
 #include "TransactionManager.h"
 #include "Portfolio.h"
-#include "Button.hpp"
+#include "gui/Button.hpp"
 #include <SFML/Graphics.hpp>
 #include <variant>
 #include <random>
@@ -76,7 +76,7 @@ int main(){
                               << mouseButtonPressed->position.x << ", "
                               << mouseButtonPressed->position.y << std::endl;
 
-                    // mouse button click support)
+                    // mouse button click support
                     sf::Vector2i mousePos = mouseButtonPressed->position;
                     
                     // buy/sell
@@ -115,7 +115,7 @@ int main(){
             // draw left section
                 sf::RectangleShape background(sf::Vector2f(240.f, 35.f));
                 background.setPosition(sf::Vector2f(10.f, 50.f + i * 40.f));
-                background.setFillColor(sf::Color(25, 25, 40, 180)); // półprzezroczyste tło
+                background.setFillColor(sf::Color(25, 25, 40, 180)); 
                 background.setOutlineColor(sf::Color(70, 70, 100));
                 background.setOutlineThickness(1.f);
                 window.draw(background);
