@@ -34,7 +34,7 @@ double Company::getMarketCap() const{
     return stockPrice * totalShares;
 }
 
-void Company::printInfo() const{
+/* void Company::printInfo() const{
     std::cout << std::fixed << std::setprecision(2);
     std::cout << "Firma: " << getName() << "\n"
                 << ticker << "\n"
@@ -42,7 +42,7 @@ void Company::printInfo() const{
                 << "Cena akcji: " << getStockPrice() << "\n"
                 << "Liczba akcji: " << getTotalShares() << "\n"
                 << "Kapitalizacja rynkowa: " << getMarketCap() << "\n\n";
-}
+} */
 
 void Company::initTrend() {
     static std::default_random_engine engine(static_cast<unsigned>(std::time(nullptr)));
@@ -70,11 +70,11 @@ void Company::updatePrice() {
 void Company::updateTrend() {
     if (trendClock.getElapsedTime().asSeconds() > nextTrendChangeTime) {
         static std::default_random_engine engine(std::random_device{}());
-        std::normal_distribution<double> drift(0.0, 0.3); // mały dryf trendu
+        std::normal_distribution<double> drift(0.0, 0.3); // trend drift
         std::uniform_real_distribution<float> timeDist(5.0f, 30.0f);
 
         trendBias += drift(engine);
-        trendBias = std::clamp(trendBias, -3.0, 3.0); // ograniczamy siłę trendu
+        trendBias = std::clamp(trendBias, -3.0, 3.0); // limit the strength of the trend
 
         trendClock.restart();
         nextTrendChangeTime = timeDist(engine);

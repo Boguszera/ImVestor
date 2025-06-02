@@ -1,5 +1,4 @@
-// Button.hpp
-enum class ButtonType { Buy, Sell };
+enum class ButtonType { Buy, Sell, Report };
 #include <SFML/Graphics.hpp>
 
 class Button {

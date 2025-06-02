@@ -26,17 +26,17 @@ bool Portfolio::removeStock(Company* company, int shares) {
             if (it->getShares() == 0) {
                 holdings.erase(it);
             }
-            return true;  // Operacja udana
+            return true; 
         } else {
-            return false;  // Zbyt mało akcji do sprzedaży
+            return false; 
         }
     } else {
-        return false;  // Brak akcji w portfelu
+        return false; 
     }
 }
 
 std::string Portfolio::getPortfolio() const {
-    std::ostringstream oss;  // Tworzymy obiekt ostringstream, który będzie buforował tekst
+    std::ostringstream oss;  // create an ostringstream object that will buffer the text
     
     if (holdings.empty()) {
         oss << "Portfolio is empty.\n";
@@ -48,5 +48,5 @@ std::string Portfolio::getPortfolio() const {
         }
     }
     
-    return oss.str();  // Zwracamy zawartość bufora jako string
+    return oss.str();  // return the buffer as a string
 }

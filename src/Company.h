@@ -13,7 +13,7 @@ private:
     double stockPrice;
     int totalShares;
 
-    //fields for trend simulation
+    // fields for trend simulation
     double trendBias = 0.0;
     sf::Clock trendClock;
     float nextTrendChangeTime = 0.0f;

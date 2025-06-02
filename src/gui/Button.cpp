@@ -1,4 +1,3 @@
-// Button.cpp
 #include "Button.hpp"
 
 Button::Button(const sf::Vector2f& size, const sf::Vector2f& position, const std::string& text, sf::Font& font, ButtonType type)
@@ -10,11 +9,14 @@ Button::Button(const sf::Vector2f& size, const sf::Vector2f& position, const std
     shape.setFillColor(sf::Color::Blue);
 
     if (type == ButtonType::Buy) {
-        normalColor = sf::Color(0, 180, 120);          // morski zielony
+        normalColor = sf::Color(0, 180, 120); 
         hoverColor  = sf::Color(0, 210, 150);
-    } else {
-        normalColor = sf::Color(200, 60, 80);          // ciepła czerwień
+    } else if (type == ButtonType::Sell) {
+        normalColor = sf::Color(200, 60, 80); 
         hoverColor  = sf::Color(230, 80, 100);
+    } else if (type == ButtonType::Report) {
+    normalColor = sf::Color(90, 90, 150); 
+    hoverColor  = sf::Color(120, 120, 180); 
     }
 
     shape.setFillColor(normalColor);

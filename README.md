@@ -4,7 +4,8 @@
 --------------
 ImVestor to interaktywna aplikacja desktopowa stworzona w C++ z wykorzystaniem biblioteki SFML 3.0,
 która symuluje rynek akcji. Użytkownik może kupować i sprzedawać akcje różnych firm,
-a także śledzić zmiany cen w czasie rzeczywistym za pomocą wizualnego wykresu.
+śledzić zmiany cen w czasie rzeczywistym za pomocą wizualnego wykresu,
+a także generować szczegółowy raport ze swoich transakcji.
 
 ## Funkcjonalności:
 - **Symulacja rynku akcji** - dynamicznie zmieniające się ceny akcji
@@ -12,7 +13,7 @@ a także śledzić zmiany cen w czasie rzeczywistym za pomocą wizualnego wykres
 - **Portfel inwestycyjny** - śledzenie posiadanych aktywów
 - **Interaktywne GUI** - przyjazny interfejs użytkownika
 - **Wizualizacja danych** - wykresy cen akcji w czasie rzeczywistym
-
+- **Generowanie raportu** - raport .csv zawierający historię transakcji oraz zysk/stratę
 -----------------------------------------------------------
 ## Wymagania systemowe
 --------------------
@@ -31,13 +32,15 @@ ImVestor/
 │   ├── Company.cpp
 │   ├── Portfolio.h         # Zarządza portfelem użytkownika — przechowuje pozycje akcji, umożliwia dodawanie i usuwanie
 │   ├── Portfolio.cpp
+│   ├── ReportGenerator.h   # Generuje raport
+│   ├── ReportGenerator.cpp 
 │   ├── StockHolding.h      # Reprezentuje pojedynczą pozycję w portfelu użytkownika (np. 100 akcji danej firmy)
 │   ├── StockHolding.cpp
 │   ├── TransactionManager.h # Obsługuje logikę kupna i sprzedaży akcji, aktualizując portfel i saldo użytkownika
 │   ├── TransactionManager.cpp
-│   ├── User.h             # Przechowuje dane użytkownika: nazwę, saldo oraz portfel inwestycyjny
+│   ├── User.h              # Przechowuje dane użytkownika: nazwę, saldo oraz portfel inwestycyjny
 │   ├── User.cpp
-│   └── main.cpp           Punkt startowy aplikacji
+│   └── main.cpp            # Punkt startowy aplikacji
 │
 ├── gui/                    # Interfejs użytkownika
 │   ├── Button.h            # Deklaracja klasy przycisku GUI
@@ -54,7 +57,7 @@ ImVestor/
 ## Budowanie projektu
 -------------------
 1. Sklonuj repozytorium:
-   git clone <adres_repozytorium>
+   git clone https://github.com/Boguszera/ImVestor.git
 
 2. Przejdź do folderu projektu:
    cd ImVestor
@@ -87,3 +90,5 @@ ImVestor/
 3. Kliknij na nazwę spółki, aby wyświetlić wykres jej cen.
 
 4. Śledź swój portfel i saldo w prawym panelu.
+
+5. Wykorzystaj przycisk "Report", aby wygenerować raport.

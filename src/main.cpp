@@ -7,7 +7,9 @@
 #include "User.h"
 #include "TransactionManager.h"
 #include "Portfolio.h"
+#include "ReportGenerator.h"
 #include "gui/Button.hpp"
+#include "SystemMessage.h"
 #include <SFML/Graphics.hpp>
 #include <variant>
 #include <random>
@@ -23,7 +25,7 @@ std::string formatTo2DecimalString(double value) {
 int main(){
     sf::RenderWindow window(sf::VideoMode({800, 600}), "ImVestor");
 
-    User user("Filip", 10000);
+    User user("Boguszera", 10000);
 
     Portfolio portfolio;
 
@@ -47,11 +49,12 @@ int main(){
 
     sf::Font font;
     if (!font.openFromFile("assets/ARIAL.ttf")) {
-        std::cout << "Nie udało się załadować czcionki!" << std::endl;
+        std::cout << "Failed to load the font!" << std::endl;
         return -1;
     }
 
     // draw buttons
+    Button generateReportButton(sf::Vector2f(70, 27), sf::Vector2f(550, 320), "Report", font, ButtonType::Report);
         for (size_t i = 0; i < companies.size(); ++i) {
             float yPos = 50.0f + i * 40.0f;
             float buyX  = 280.0f;
@@ -72,9 +75,6 @@ int main(){
             }
             else if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>()) {
                 if (mouseButtonPressed->button == sf::Mouse::Button::Left) {
-                    std::cout << "Left mouse button pressed at: "
-                              << mouseButtonPressed->position.x << ", "
-                              << mouseButtonPressed->position.y << std::endl;
 
                     // mouse button click support
                     sf::Vector2i mousePos = mouseButtonPressed->position;
@@ -95,6 +95,11 @@ int main(){
                         if (companyArea.contains((sf::Vector2f)mousePos)) {
                             selectedCompanyIndex = static_cast<int>(i);
                         }
+                    }
+
+                    // report 
+                    if (generateReportButton.isClicked(mousePos)) {
+                        ReportGenerator::generateReport("transaction_report.csv");
                     }
                 }
             }
@@ -153,9 +158,11 @@ int main(){
         for (auto& btn : sellButtons) {
             btn.updateHover(mousePos);
         }
+        generateReportButton.updateHover(mousePos);
 
         for (auto& btn : buyButtons) btn.draw(window);
         for (auto& btn : sellButtons) btn.draw(window);
+        generateReportButton.draw(window);
 
         // draw right section (userInfo and portfolio)
         sf::RectangleShape userInfoPanel(sf::Vector2f(240.f, 60.f));
@@ -186,7 +193,7 @@ int main(){
         // draw chart
         if (selectedCompanyIndex >= 0) {
             const auto& history = companies[selectedCompanyIndex].getPriceHistory();
-            //if (history.size() < 2) return;
+            if (history.size() < 2) continue;
 
             float maxPrice = *std::max_element(history.begin(), history.end());
             float minPrice = *std::min_element(history.begin(), history.end());
@@ -321,6 +328,18 @@ int main(){
             title.setPosition(sf::Vector2f(chartX, chartY - 30.f));
             window.draw(title);
         }
+        
+        sf::Text messageText(font, "", 14);
+        messageText.setFont(font);
+        messageText.setCharacterSize(16);
+        messageText.setFillColor(sf::Color::Yellow);
+        messageText.setString(SystemMessage::get());
+        messageText.setPosition(sf::Vector2f(20.f, 570.f)); // np. na dole ekranu
+
+        if (!SystemMessage::get().empty()) {
+            window.draw(messageText);
+        }
+
         window.display();
     }
         return 0;
