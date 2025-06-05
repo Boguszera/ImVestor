@@ -48,7 +48,7 @@ int main(){
     sf::Clock priceUpdateClock;
 
     sf::Font font;
-    if (!font.openFromFile("assets/ARIAL.ttf")) {
+    if (!font.openFromFile("assets/LiberationSans-Regular.ttf")) {
         std::cout << "Failed to load the font!" << std::endl;
         return -1;
     }
@@ -118,7 +118,7 @@ int main(){
         // draw avaliable companies
         for (size_t i = 0; i < companies.size(); ++i) {
             // draw left section
-                sf::RectangleShape background(sf::Vector2f(240.f, 35.f));
+                sf::RectangleShape background(sf::Vector2f(245.f, 35.f));
                 background.setPosition(sf::Vector2f(10.f, 50.f + i * 40.f));
                 background.setFillColor(sf::Color(25, 25, 40, 180)); 
                 background.setOutlineColor(sf::Color(70, 70, 100));

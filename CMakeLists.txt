@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
+
+
 project(ImVestor
     VERSION 1.0.0
     DESCRIPTION "ImVestor"
@@ -6,7 +8,7 @@ project(ImVestor
 )
 
 # configuration options
-option(USE_SYSTEM_SFML ON)
+# option(USE_SYSTEM_SFML ON)
 option(ENABLE_SANITIZERS OFF)
 
 # compiler configuration
@@ -26,7 +28,7 @@ if(ENABLE_SANITIZERS AND NOT MSVC)
 endif()
 
 # dependency (SFML 3.0.0)
-if(USE_SYSTEM_SFML)
+# if(USE_SYSTEM_SFML)
     find_package(SFML 3.0 REQUIRED COMPONENTS 
         Graphics
         Window
@@ -35,15 +37,15 @@ if(USE_SYSTEM_SFML)
     )
     
     message(STATUS "Found SFML version: ${SFML_VERSION}")
-else()
-    include(FetchContent)
-    FetchContent_Declare(
-        sfml
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 3.0.0
-    )
-    FetchContent_MakeAvailable(sfml)
-endif()
+# else()
+#    include(FetchContent)
+#    FetchContent_Declare(
+#        sfml
+#        GIT_REPOSITORY https://github.com/SFML/SFML.git
+#        GIT_TAG 3.0.0
+#    )
+#    FetchContent_MakeAvailable(sfml)
+# endif()
 
 # project structure
 file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/gui/*.cpp")
