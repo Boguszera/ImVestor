@@ -1,114 +1,112 @@
 # ImVestor
+![Preview](img/app.PNG)
+## Project Description
+ImVestor is an interactive desktop application written in C++ using the SFML 3.0 library that simulates a stock market.
+The user can buy and sell shares of various companies, track price changes in real time using visual charts, and generate a detailed report of their transactions.
 
-## Opis projektu
-ImVestor to interaktywna aplikacja desktopowa stworzona w C++ z wykorzystaniem biblioteki SFML 3.0,
-która symuluje rynek akcji. Użytkownik może kupować i sprzedawać akcje różnych firm,
-śledzić zmiany cen w czasie rzeczywistym za pomocą wizualnego wykresu,
-a także generować szczegółowy raport ze swoich transakcji.
-
-## Funkcjonalności:
-- **Symulacja rynku akcji** - dynamicznie zmieniające się ceny akcji
-- **System transakcji** - możliwość kupna i sprzedaży akcji
-- **Portfel inwestycyjny** - śledzenie posiadanych aktywów
-- **Interaktywne GUI** - przyjazny interfejs użytkownika
-- **Wizualizacja danych** - wykresy cen akcji w czasie rzeczywistym
-- **Generowanie raportu** - raport .csv zawierający historię transakcji oraz zysk/stratę
+## Features:
+- **Stock Market Simulation** - dynamically changing stock prices
+- **Transaction System** - ability to buy and sell shares
+- **Investment Portfolio** - track your owned assets
+- **Interactive GUI** - user-friendly interface
+- **Data Visualization** - real-time stock price charts
+- **Report Generation** - create a .csv report containing transaction history and profit/loss
 -----------------------------------------------------------
-## Wymagania systemowe
-- Kompilator C++ obsługujący standard C++20 (np. GCC 10+, Clang 12+, MSVC 2019+)
-- CMake w wersji 3.20 lub nowszej
-- SFML 3.0.0 (UWAGA: na systemach Linux może być konieczne doinstalowane zależności )
-- System operacyjny: Windows / Linux / macOS
+## System Requirements
+- C++ compiler supporting the C++20 standard (e.g., GCC 10+, Clang 12+, MSVC 2019+)
+- CMake version 3.20 or newer
+- SFML 3.0.0 (NOTE: additional dependencies may be required on Linux systems)
+- Operating system: Windows / Linux / macOS
 
-**UWAGA:** Na systemach Linux może być konieczne doinstalowanie dodatkowych zależności, aby poprawnie uruchomić lub skompilować projekt. Na przykład:
+**NOTE:** On Linux systems, you may need to install additional dependencies to compile or run the project correctly. For example:
 ```bash
-sudo apt-get update # SFML 3.0.0 jest stosunkowo nową technologią (może jej nie być w starych cache'ach)
+sudo apt-get update # SFML 3.0.0 is relatively new (it may not be present in older package caches)
 sudo apt-get install libx11-dev libxrandr-dev libxi-dev libxext-dev libxcursor-dev libsfml-dev
 ```
 
 -----------------------------------------------------------
-## Struktura projektu
+## Project Structure
 ```
 ImVestor/
-├── src/                    # Katalog ze wszystkimi plikami źródłowymi (.h i .cpp)
-│   ├── Company.h           # Klasa reprezentująca firmę na giełdzie, zarządzająca ceną akcji, trendami i historią cen
+├── src/                    # All source files (.h and .cpp)
+│   ├── Company.h           # Represents a company in the market, manages stock prices, trends, and history
 │   ├── Company.cpp
-│   ├── Portfolio.h         # Zarządza portfelem użytkownika — przechowuje pozycje akcji, umożliwia dodawanie i usuwanie
+│   ├── Portfolio.h         # Manages the user’s portfolio — stores and updates owned stocks
 │   ├── Portfolio.cpp
-│   ├── ReportGenerator.h   # Generuje raport
+│   ├── ReportGenerator.h   # Generates transaction reports
 │   ├── ReportGenerator.cpp 
-│   ├── SystemMessage.h     # Zarządza komunikatami w aplikacji
+│   ├── SystemMessage.h     # Handles system messages within the app
 │   ├── SystemMessage.cpp 
-│   ├── StockHolding.h      # Reprezentuje pojedynczą pozycję w portfelu użytkownika (np. 100 akcji danej firmy)
+│   ├── StockHolding.h      # Represents a single stock position in the user’s portfolio (e.g., 100 shares of a company)
 │   ├── StockHolding.cpp
-│   ├── TransactionManager.h # Obsługuje logikę kupna i sprzedaży akcji, aktualizując portfel i saldo użytkownika
+│   ├── TransactionManager.h # Handles buying/selling logic and updates portfolio and balance
 │   ├── TransactionManager.cpp
-│   ├── User.h              # Przechowuje dane użytkownika: nazwę, saldo oraz portfel inwestycyjny
+│   ├── User.h              # Stores user data: name, balance, and investment portfolio
 │   ├── User.cpp
-│   └── main.cpp            # Punkt startowy aplikacji
+│   └── main.cpp            # Application entry point
 │
-├── gui/                    # Interfejs użytkownika
-│   ├── Button.h            # Deklaracja klasy przycisku GUI
-│   └── Button.cpp          # Implementacja klasy przycisku GUI
+├── gui/                    # Graphical User Interface
+│   ├── Button.h            # GUI button class declaration
+│   └── Button.cpp          # GUI button class implementation
 │
-├── assets/                 # Zasoby (czcionki, obrazy, ikony itp.)
-│   └── LiberationSans-Regular.ttf  # Czcionka wykorzystywana w aplikacji
+├── assets/                 # Resources (fonts, images, icons, etc.)
+│   └── LiberationSans-Regular.ttf  # Font used by the application
 │
-├── README.md               # Dokumentacja projektu i instrukcje użytkowania
-├── .gitignore              # Pliki i foldery ignorowane przez Git
+├── README.md               
+├── .gitignore              
 ```
 
 -----------------------------------------------------------
-## Budowanie projektu
+## Building the Project
 ```bash
- 1. Sklonuj repozytorium:
+ 1. Clone the repository:
    git clone https://github.com/Boguszera/ImVestor.git
 
- 2. Przejdź do folderu projektu:
+ 2. Navigate to the project folder:
    cd ImVestor
  
- 3. Utwórz katalog build i przejdź do niego:
+ 3. Create a build directory and enter it:
    mkdir build && cd build
 
- 4. Skonfiguruj projekt za pomocą CMake:
+ 4. Configure the project using CMake:
    cmake ..
 
- 5. Zbuduj projekt:
+ 5. Build the project:
    cmake --build .
 
- 6. Uruchom aplikację:
-   ./ImVestor  (Linux/macOS)
-   ImVestor.exe (Windows)
+ 6. Run the application:
+   ./ImVestor      (Linux/macOS)
+   ImVestor.exe    (Windows)
 
 ```
 
 -----------------------------------------------------------
-## Użycie
-- Po uruchomieniu aplikacji wyświetlana jest lista dostępnych spółek z aktualnymi cenami akcji.
+## Usage
+- After launching the application, a list of available companies with current stock prices will be displayed.
 
-- Użyj przycisków "Buy" i "Sell" do dokonywania transakcji.
+- Use the "Buy" and "Sell" buttons to perform transactions.
 
-- Kliknij na nazwę spółki, aby wyświetlić wykres jej cen.
+- Click a company name to view its price chart.
 
-- Śledź swój portfel i saldo w prawym panelu.
+- Track your portfolio and balance in the right-hand panel.
 
-- Wykorzystaj przycisk "Report", aby wygenerować raport.
+- Use the "Report" button to generate a transaction report.
 -----------------------------------------------------------
 
-## Mechanizm zmiany cen akcji
-Ceny akcji w aplikacji są generowane na podstawie połączenia trendu (wzrostowy/spadkowy/liniowy) oraz losowych fluktuacji, co imituje realne zachowanie rynku.
+## Stock Price Change Mechanism
+Stock prices are generated based on a combination of trend (upward / downward / neutral) and random fluctuations, mimicking real market behavior.
 
-- **Inicjalizacja trendu:** Każda spółka otrzymuje losowy bias trendu z zakresu od [-2.0, 2.0], który wpływa na ogólny kierunek zmian cen.
-- **Aktualizacja ceny:** Cena zmienia się na podstawie trendu oraz losowego szumu (rozkład normalny - Gaussowski), co sprawia, że zmiany nie są całkowicie przewidywalne.
-- **Minimalna cena:** Cena akcji nigdy nie spada poniżej 1.0 - uniknamy w ten sposób nieprawidłowych wartości.
-- **Zmiana trendu:** Co losowy okres czasu (5–30 sekund) trend jest lekko modyfikowany przez dodanie niewielkiego dryfu, który jest ograniczony zakresem [-3.0, 3.0], co symuluje zmieniające się nastroje inwestorów i reakcje na wydarzenia.
+- **Trend Initialization:** Each company receives a random trend bias in the range [-2.0, 2.0], affecting the general direction of price movement.
+- **Price Update:** The price changes based on the current trend and Gaussian (normally distributed) random noise, making movements less predictable.
+- **Minimum Price:** Stock prices never drop below 1.0 — this prevents invalid values.
+- **Trend Adjustment:** At random intervals (5–30 seconds), the trend is slightly modified by a small drift within the range [-3.0, 3.0], simulating shifting investor sentiment and reactions to events.
 
 -----------------------------------------------------------
 
-## Licencja
-Projekt korzysta z biblioteki SFML, która jest dostępna na licencji zlib/png (https://www.sfml-dev.org/license.php).
+## License
+This project uses the SFML library, available under the zlib/png license (https://www.sfml-dev.org/license.php).
 
-Font LiberationSans-Regular jest używany na licencji SIL Open Font License (https://scripts.sil.org/OFL).
+The LiberationSans-Regular font is used under the SIL Open Font License (https://scripts.sil.org/OFL).
 
-Kod tego projektu jest udostępniany na licencji MIT — zobacz plik LICENSE.
+The project’s source code is released under the MIT License — see the LICENSE file for details.
 -----------------------------------------------------------
